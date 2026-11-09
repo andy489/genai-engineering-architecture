@@ -1,0 +1,58 @@
+sequenceDiagram
+    title Customer Chat Journey: "Is the Globomantics Pro waterproof?"
+
+    actor User as Customer
+    participant GW as API Gateway
+    participant Cache as Semantic Cache<br/>(Redis)
+    participant Orch as Chat Orchestrator
+    participant Guard as Guardrails
+    participant Emb as Embedding Service
+    participant DB as pgvector
+    participant LLM
+
+    User->>GW: POST /v1/chat {message, session_id}
+    Note right of GW: Auth + rate limit (10ms)
+
+    GW->>Cache: Check semantic cache (cosine > 0.95)
+    alt Cache HIT
+        Cache-->>GW: Cached response
+        GW-->>User: Response (from cache)
+    else Cache MISS
+        Cache-->>GW: No match
+
+        GW->>Orch: Forward request
+        activate Orch
+
+        Orch->>Guard: Check input (PII, prompt injection)
+        Note right of Guard: (30ms)
+        Guard-->>Orch: Pass
+
+        Note right of Orch: Intent classification (80ms)
+        Orch->>Orch: Classify intent → "product_question"
+
+        Orch->>Emb: Embed query
+        Note right of Emb: (40ms)
+        Emb-->>Orch: Query vector
+
+        Orch->>DB: retrieve(query_vec, top_k=3, category="speakers")
+        Note right of DB: (120ms)
+        DB-->>Orch: 3 product spec chunks
+
+        Orch->>Orch: Assemble prompt (system + history + chunks)
+
+        Orch->>LLM: Generate {messages, tools, ...}
+        Note right of LLM: (800ms)
+        LLM-->>Orch: Full response
+
+        Orch->>Guard: Check full response (toxicity, PII leaks, policy)
+        Note right of Guard: (40ms)
+        Guard-->>Orch: Pass
+
+        Orch-->>GW: Response + metadata
+        deactivate Orch
+        GW-->>User: Response
+
+        GW->>Cache: Store response (query embedding + answer)
+    end
+
+    Note over User, LLM: Total: ~1.3s (cache miss) | ~50ms (cache hit)

@@ -1,0 +1,50 @@
+flowchart LR
+    %% Data Flow Diagram: GloboAssist Request Pipeline
+
+    A["Raw user query"]:::input
+    Cache["Semantic cache<br/>(Redis)"]:::storage
+    B["Input guardrail <br/>(PII scan, prompt injection)"]:::processing
+    C["Intent<br/>classification"]:::processing
+    E["Vector retrieval<br/>+ reranking"]:::retrieval
+    F["Database query<br/>(orders, CRM)"]:::retrieval
+    G["Prompt assembly<br/>(system + history +<br/>context + query)"]:::processing
+    H["Model generation"]:::model
+    I["Guardrails"]:::processing
+    K["Response<br/>to user"]:::output
+    L["Audit log<br/>(redacted)"]:::storage
+    M["Metrics<br/>(Grafana)"]:::storage
+
+    %% Main pipeline
+    A --> Cache
+    Cache -->|hit| K
+    Cache -->|miss| B
+    B --> C
+    C --> E
+    C --> F
+    E --> G
+    F --> G
+    G --> H
+    H --> I
+    I --> K
+    K -.->|write-back| Cache
+
+    %% Audit trail: captured at each key stage
+    B --> L
+    E --> L
+    F --> L
+    H --> L
+    I --> L
+    K --> L
+
+    %% Metrics
+    Cache --> M
+    H --> M
+    I --> M
+
+    %% ── Styling ──
+    classDef input fill:#d4edda,stroke:#28a745,color:#000
+    classDef processing fill:#cce5ff,stroke:#0d6efd,color:#000
+    classDef retrieval fill:#fff3cd,stroke:#ffc107,color:#000
+    classDef model fill:#f8d7da,stroke:#dc3545,color:#000
+    classDef output fill:#d4edda,stroke:#28a745,color:#000
+    classDef storage fill:#e2e3e5,stroke:#6c757d,color:#000

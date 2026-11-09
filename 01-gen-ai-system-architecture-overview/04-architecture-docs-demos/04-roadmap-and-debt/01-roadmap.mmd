@@ -1,0 +1,19 @@
+%%{init: {'gantt': {'leftPadding': 100}}}%%
+gantt
+    title GloboAssist Architecture Evolution Roadmap
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b
+
+    section Phase 1 (Q1)
+    Hotfix - Session TTL tuning           :crit, p1_1, 2027-01-01, 7d
+    Hotfix - Add circuit breaker on LLM   :crit, p1_2, 2027-01-08, 7d
+
+    section Phase 2 (Q2)
+    Extract retrieval into microservice   :active, p2_1, 2027-04-01, 21d
+    Migrate to text-embedding-3-large     :        p2_2, after p2_1, 14d
+    Prompt A/B testing framework          :        p2_3, 2027-05-15, 14d
+
+    section Phase 3 (Q3)
+    Multi-modal support (product images)  :        p3_1, 2027-07-01, 42d
+    Expand agent flows for troubleshooting:        p3_2, after p3_1, 28d
+    Evaluate real-time analytics streaming:        p3_3, 2027-08-01, 21d

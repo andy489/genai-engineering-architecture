@@ -1,0 +1,43 @@
+C4Container
+    title Container Diagram: GloboAssist Platform (Level 2)
+
+    Person(customer, "E-commerce Customer", "Asks questions via chat")
+    Person(agent, "Support Agent", "Uses AI copilot for<br/>ticket resolution")
+
+    System_Boundary(c1, "GloboAssist GenAI Platform") {
+
+        Container(api_gateway, "API Gateway", "Kong", "Routing, rate limiting,<br/>authentication")
+
+        Boundary(app_layer, "Orchestration Layer") {
+            Container(chat_orch, "Chat Orchestrator", "Python", "Manages context and workflow<br/>for customer chat")
+            Container(agent_orch, "Agent Copilot Orchestrator", "Python", "Manages tools and retrieval<br/>for support agents")
+            Container(analytics_workers, "Analytics Worker Pool", "Python", "Processes background<br/>ticket summarization jobs")
+        }
+
+        Boundary(services_layer, "Shared Services") {
+            Container(embedding_svc, "Embedding Service", "Python / FastAPI", "Converts queries and docs<br/>into vector representations")
+            Container(scheduler, "Analytics Scheduler", "Python / APScheduler", "Triggers batch analytics jobs<br/>on a cron schedule")
+            Container(job_queue, "Job Queue", "RabbitMQ", "Manages async jobs<br/>for analytics")
+        }
+
+        Boundary(data_layer, "Data Layer") {
+            ContainerDb(redis, "Session Store", "Redis", "Caches multi-turn<br/>conversation states")
+            ContainerDb(vector_db, "Vector Knowledge Base", "PostgreSQL + pgvector", "Product catalog and<br/>support article embeddings")
+        }
+    }
+
+    Rel(customer, api_gateway, "Connects via", "HTTPS")
+    Rel(agent, api_gateway, "Connects via", "HTTPS")
+
+    Rel(api_gateway, chat_orch, "Routes to")
+    Rel(api_gateway, agent_orch, "Routes to")
+
+    Rel(scheduler, job_queue, "Enqueues batch jobs")
+
+    Rel(chat_orch, redis, "Reads/writes session state")
+    Rel(chat_orch, embedding_svc, "Gets embeddings", "gRPC")
+    Rel(agent_orch, embedding_svc, "Gets embeddings", "gRPC")
+    Rel(embedding_svc, vector_db, "Queries nearest neighbors")
+    Rel(analytics_workers, job_queue, "Pulls jobs from")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")

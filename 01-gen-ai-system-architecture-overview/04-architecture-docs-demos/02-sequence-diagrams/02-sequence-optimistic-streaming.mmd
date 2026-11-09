@@ -1,0 +1,41 @@
+sequenceDiagram
+    title Optimistic Streaming with Post-hoc Guardrail
+
+    actor User as Customer
+    participant Orch as Orchestrator
+    participant LLM as LLM
+    participant Guard as Guardrails
+
+    Note over Orch, Guard: Input guardrail + RAG already passed<br/>(same as before this point)
+
+    Orch->>LLM: Generate (streaming)
+    activate LLM
+    activate Orch
+
+    par Stream to user
+        loop For each token
+            LLM-->>Orch: Token
+            Orch-->>User: SSE event: token
+        end
+        LLM-->>Orch: finish_reason: stop
+        deactivate LLM
+    and Accumulate for guardrail
+        Note right of Orch: Buffer tokens as they arrive
+    end
+
+    Orch->>Guard: Check full response (toxicity, PII, policy)
+    Note right of Guard: (40ms)
+
+    alt Guardrail PASS
+        Guard-->>Orch: Pass
+        Orch-->>User: SSE event: done
+    else Guardrail FAIL
+        Guard-->>Orch: Block (reason)
+        Orch-->>User: SSE event: retract
+        Note over User: Frontend blanks<br/>the response
+        Orch-->>User: SSE event: error message
+    end
+
+    deactivate Orch
+
+    Note over User, Guard: User sees tokens in real-time<br/>Risk: brief exposure to unsafe content before retraction<br/>A "still verifying" state is a middle-ground pattern

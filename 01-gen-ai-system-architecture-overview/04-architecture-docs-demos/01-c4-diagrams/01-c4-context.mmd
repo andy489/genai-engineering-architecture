@@ -1,0 +1,43 @@
+C4Context
+    title GloboAssist: C4 Context Diagram (Level 1)
+
+    Person(customer, "E-commerce Customer", "Asks product questions,<br/>tracks orders, processes returns")
+    Person(agent, "Support Agent", "Uses AI copilot for<br/>ticket resolution")
+    Person(leadership, "Leadership", "Receives analytics reports<br/>on support trends")
+
+    System(GloboAssist, "GloboAssist Platform", "GenAI-powered support platform:<br/>customer chat, agent copilot, analytics")
+
+    Boundary(enterprise, "Enterprise Data Systems") {
+        System_Ext(orders, "Order Management DB", "Order history,<br/>shipping, inventory")
+        System_Ext(crm, "CRM", "Ticket history,<br/>customer records")
+    }
+
+    Boundary(ai, "AI / LLM Providers") {
+        System_Ext(anthropic, "Open API", "Chat and<br/>copilot inference (NA)")
+        System_Ext(llama, "Self-hosted LLM", "Open-source model,<br/>analytics + EU traffic")
+    }
+
+    Boundary(ops, "Observability") {
+        System_Ext(monitoring, "Grafana", "Monitoring, alerting,<br/>dashboards")
+    }
+
+    Rel(customer, GloboAssist, "Asks questions", "HTTPS / SSE")
+    Rel(agent, GloboAssist, "Gets suggestions", "HTTPS")
+    Rel(GloboAssist, leadership, "Sends weekly reports", "Email / Dashboard")
+
+    Rel(GloboAssist, orders, "Queries orders", "REST")
+    Rel(GloboAssist, crm, "Reads tickets", "REST")
+    Rel(GloboAssist, anthropic, "Prompts / completions", "HTTPS")
+    Rel(GloboAssist, llama, "Prompts / completions", "gRPC")
+    Rel(GloboAssist, monitoring, "Emits metrics", "Prometheus")
+
+    UpdateRelStyle(customer, GloboAssist, $offsetX="-30", $offsetY="-20")
+    UpdateRelStyle(agent, GloboAssist, $offsetX="-10", $offsetY="20")
+    UpdateRelStyle(GloboAssist, leadership, $offsetX="10", $offsetY="-30")
+    UpdateRelStyle(GloboAssist, orders, $offsetX="-50", $offsetY="10")
+    UpdateRelStyle(GloboAssist, crm, $offsetX="30", $offsetY="30")
+    UpdateRelStyle(GloboAssist, anthropic, $offsetX="-60", $offsetY="20")
+    UpdateRelStyle(GloboAssist, llama, $offsetX="20", $offsetY="40")
+    UpdateRelStyle(GloboAssist, monitoring, $offsetX="-20", $offsetY="30")
+
+    UpdateLayoutConfig($c4ShapeInRow="2", $c4BoundaryInRow="2")

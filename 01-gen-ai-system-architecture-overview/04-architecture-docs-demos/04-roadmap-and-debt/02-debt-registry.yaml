@@ -1,0 +1,149 @@
+# Technical debt register
+# Source of truth for the GenAI platform team.
+# YAML chosen for richer per-item metadata and hierarchical structure.
+
+meta:
+  owner_team: platform
+  scoring:
+    impact:
+      1: cosmetic
+      5: production-blocking
+    effort:
+      S: "<= 2 days"
+      M: "<= 1 sprint"
+      L: "> 1 sprint"
+
+items:
+  - id: DEBT-001
+    title: Prompt templates hardcoded in code
+    type: deliberate
+    description: |
+      Templates live inline in `prompt_builder.py`. Moving them to
+      versioned `templates/*.j2` files lets product iterate without
+      a redeploy and unblocks A/B testing of prompt variants.
+    impact:
+      score: 3
+      dimensions: [developer-velocity, product-iteration]
+    effort:
+      size: S
+      estimated_days: 2
+    priority: high-quick-win
+    roadmap:
+      phase: 2
+      tied_to_feature: prompt-versioning
+    status:
+      current: open
+    ownership:
+      owner: smith.kim
+      reviewers: [t.rivera, d.ng]
+    relations:
+      related_to: [DEBT-002]
+    tags: [prompts, code-quality]
+    references:
+      - https://github.com/example/genai/issues/1247
+
+  - id: DEBT-002
+    title: No automated retrieval relevance testing
+    type: accidental
+    description: |
+      Generation is covered by an eval harness; retrieval is not.
+      We need a frozen golden set with nDCG@10 reported in CI before
+      we can safely swap the embedding model.
+    impact:
+      score: 4
+      dimensions: [reliability, future-flexibility]
+    effort:
+      size: M
+      estimated_days: 8
+    priority: medium
+    roadmap:
+      phase: 2
+    status:
+      current: open
+    ownership:
+      owner: t.rivera
+      reviewers: [smith.kim]
+    relations:
+      blocks: [DEBT-004]
+    tags: [retrieval, testing, eval]
+    references:
+      - https://github.com/example/genai/blob/main/rfcs/0014-retrieval-eval.md
+
+  - id: DEBT-003
+    title: Session TTL too aggressive (dropped sessions)
+    type: accidental
+    description: |
+      Sessions evict after 5 min of inactivity, dropping multi-turn
+      context mid-conversation. Fix is a config bump plus a
+      sliding-window expiry. User reports trace to mid-September.
+    impact:
+      score: 4
+      dimensions: [user-experience, support-load]
+    effort:
+      size: S
+      estimated_days: 1
+    priority: critical-quick-win
+    roadmap:
+      phase: 1
+    status:
+      current: in-progress
+    ownership:
+      owner: d.ng
+      reviewers: [t.rivera]
+    tags: [sessions, ux-bug]
+    references:
+      - https://github.com/example/genai/pull/1392
+
+  - id: DEBT-004
+    title: "Embedding model outdated (ada-002 -> text-embedding-3-large)"
+    type: environmental
+    description: |
+      The vendor has deprecated `ada-002`. Migration requires
+      re-indexing ~2M docs and the relevance harness from DEBT-002.
+      Expected cost increase ~18%, but materially better recall on
+      long-tail queries.
+    impact:
+      score: 3
+      dimensions: [retrieval-quality, vendor-risk]
+    effort:
+      size: M
+      estimated_days: 10
+    priority: medium
+    roadmap:
+      phase: 2
+    status:
+      current: open
+    ownership:
+      owner: m.shah
+      reviewers: [t.rivera, smith.kim]
+    relations:
+      depends_on: [DEBT-002]
+    tags: [embeddings, vendor, reindex]
+    references:
+      - https://platform.openai.com/docs/deprecations
+
+  - id: DEBT-005
+    title: No circuit breaker on LLM API calls
+    type: deliberate
+    description: |
+      Shipped without a circuit breaker to hit the launch date. A
+      single provider outage now cascades to full app downtime.
+      Plan: wrap `LLMClient.call()` with `pybreaker` and add
+      retry-after handling.
+    impact:
+      score: 5
+      dimensions: [reliability, incident-blast-radius]
+    effort:
+      size: S
+      estimated_days: 2
+    priority: critical-quick-win
+    roadmap:
+      phase: 1
+    status:
+      current: in-progress
+    ownership:
+      owner: m.shah
+      reviewers: [d.ng]
+    tags: [resilience, llm-client]
+    references:
+      - https://github.com/example/genai/issues/1031

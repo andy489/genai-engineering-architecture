@@ -1,0 +1,6 @@
+# Dependencies
+# Pinned versions to ensure reproducibility
+
+chromadb==1.5.8
+transformers==5.5.4
+torch==2.11.0
