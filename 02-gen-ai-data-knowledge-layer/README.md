@@ -22,8 +22,8 @@ All modules are consolidated into a single notebook: [`genai-data-knowledge-laye
 | Directory | Module | Description |
 |---|---|---|
 | [`01-embeddings-demos/`](01-embeddings-demos/) | 01 | Batch embedding generation with rate limiting, caching, and semantic similarity search |
-| [`03-knowledge-graphs-demos/`](03-knowledge-graphs-demos/) | 03 | LangChain graph extraction, graph neural networks, node embeddings, duplicate entity detection |
-| [`04-production-pipeline-demos/`](04-production-pipeline-demos/) | 04 | Chunking strategies, metadata enrichment, PDF processing, Airflow DAG orchestration, synthetic data generation |
+| [`02-knowledge-graphs-demos/`](02-knowledge-graphs-demos/) | 02 | LangChain graph extraction, graph neural networks, node embeddings, duplicate entity detection |
+| [`03-production-pipeline-demos/`](03-production-pipeline-demos/) | 03 | Chunking strategies, metadata enrichment, PDF processing, Airflow DAG orchestration, synthetic data generation |
 
 ---
 
