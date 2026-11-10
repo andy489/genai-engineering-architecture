@@ -1,0 +1,11 @@
+{
+  "summary": null,
+  "turns": [
+    {
+      "role": "user",
+      "content": "Summarize and analyze Paul Graham's essay 'Do What You Love'",
+      "timestamp": "2026-05-29T12:14:57.826692",
+      "tokens": 10
+    }
+  ]
+}

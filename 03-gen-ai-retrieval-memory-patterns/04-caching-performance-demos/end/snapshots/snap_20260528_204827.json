@@ -1,0 +1,23 @@
+{
+  "summary": null,
+  "turns": [
+    {
+      "role": "user",
+      "content": "Summarize and analyze Paul Graham's essay 'Do What You Love'",
+      "timestamp": "2026-05-28T20:48:27.196144",
+      "tokens": 10
+    },
+    {
+      "role": "user",
+      "content": "Paul Graham advice on startup funding and investors",
+      "timestamp": "2026-05-28T20:48:27.196191",
+      "tokens": 8
+    },
+    {
+      "role": "user",
+      "content": "What are the key characteristics of successful founders according to Paul Graham?",
+      "timestamp": "2026-05-28T20:48:27.196397",
+      "tokens": 12
+    }
+  ]
+}

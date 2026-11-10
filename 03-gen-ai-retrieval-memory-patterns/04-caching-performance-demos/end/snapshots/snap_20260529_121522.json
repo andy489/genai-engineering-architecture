@@ -1,0 +1,17 @@
+{
+  "summary": null,
+  "turns": [
+    {
+      "role": "user",
+      "content": "What are the key characteristics of successful founders according to Paul Graham?",
+      "timestamp": "2026-05-29T12:15:13.572978",
+      "tokens": 12
+    },
+    {
+      "role": "assistant",
+      "content": "According to Paul Graham, successful founders are typically younger, more technical individuals rather than MBAs. They are also those who can remain as CEO of their startups and are often sources of advice for other founders. Additionally, successful founders are drawn to work that may not have current prestige, indicating they have the right motives and are focused on genuine discovery rather than the desire to impress others.",
+      "timestamp": "2026-05-29T12:15:22.889619",
+      "tokens": 68
+    }
+  ]
+}

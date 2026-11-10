@@ -1,0 +1,17 @@
+{
+  "summary": null,
+  "turns": [
+    {
+      "role": "user",
+      "content": "Paul Graham advice on startup funding and investors",
+      "timestamp": "2026-05-29T12:08:57.464032",
+      "tokens": 8
+    },
+    {
+      "role": "assistant",
+      "content": "Paul Graham advises that startups should seek funding from successful startup founders rather than traditional venture capitalists. He emphasizes the importance of smaller investments and the need for investors to provide not just capital but also guidance and support to founders. He believes that funding startups in batches can alleviate the isolation founders often face and foster a supportive community among them. Graham also highlights the significance of having the right motives when pursuing startup work, suggesting that unprestigious projects can lead to genuine discoveries and better outcomes.",
+      "timestamp": "2026-05-29T12:09:03.202690",
+      "tokens": 88
+    }
+  ]
+}
