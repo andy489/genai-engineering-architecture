@@ -1,0 +1,139 @@
+════════════════════════════════════════════════════════
+ Pre-flight check — Demo Clip 4: SLO Dashboards
+ Sat Mar 14 15:16:43 IST 2026
+ Log: /Users/rt-prime/FSM/01-Active/02-Pluralsight/reliability-slos-incident-management-gen-ai-systems/repo/module-02-slis-slos-slas/demo-clip4-slo-burnrate-freeze/.run/preflight_20260314_151643.log
+════════════════════════════════════════════════════════
+
+── [1/9] Docker daemon ──
+[0;32m✓[0m Docker running (version 29.2.1)
+
+── [2/9] Required ports ──
+[0;32m✓[0m :8080 demo running (Python PID:4456)
+[0;32m✓[0m :9001 demo running (Python PID:4450)
+[0;32m✓[0m :9002 demo running (Python PID:4452)
+[0;32m✓[0m :9003 demo running (Python PID:4454)
+[0;32m✓[0m :9090 demo running (com.docke PID:3930)
+[0;32m✓[0m :3000 demo running (com.docke PID:3930)
+
+── [3/9] App metrics endpoint (:8080) ──
+[0;32m✓[0m App up — genai_requests_total found (3 outcome labels)
+
+── [4/9] Dependency stubs ──
+[0;32m✓[0m model (:9001) → {"text":"ok"}
+[0;32m✓[0m retrieval (:9002) → {"hit":true}
+[0;32m✓[0m tools (:9003) → {"result":"ok"}
+
+── [5/9] Prometheus scrape target (:9090) ──
+[1;33m⚠[0m Prometheus not ready (no_targets
+no_response) — waiting 5s (attempt 1/5)...
+[0;32m✓[0m Prometheus scraping app (1/1 up)
+
+── [6/9] Recording rules ──
+[0;32m✓[0m Recording rule: slo:burnrate_5m
+[0;32m✓[0m Recording rule: slo:burnrate_1h
+[0;32m✓[0m Recording rule: slo:burnrate_30m
+[0;32m✓[0m Recording rule: slo:burnrate_6h
+[0;32m✓[0m Recording rule: slo:error_budget_remaining_demo
+
+── [7/9] Alert rules ──
+[0;32m✓[0m Alert rule: SLOFastBurnPage
+[0;32m✓[0m Alert rule: SLOSlowBurnTicket
+
+── [8/9] Grafana (:3000) ──
+[0;32m✓[0m Grafana is up
+[0;32m✓[0m Dashboard 'SLO Compliance: GenAI API' is provisioned
+
+── [9/9] End-to-end smoke test ──
+[0;32m✓[0m POST /chat responded — outcome: success
+
+════════════════════════════════════════════════════════
+ RAW LOGS (attached for debugging)
+════════════════════════════════════════════════════════
+
+── app.log (last 30 lines) ──
+INFO:     Started server process [4456]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53356 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53358 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53369 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53378 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53369 - "GET /metrics HTTP/1.1" 200 OK
+
+── model.log (last 30 lines) ──
+INFO:     Started server process [4450]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53360 - "GET /complete HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53382 - "GET /complete HTTP/1.1" 200 OK
+
+── retrieval.log (last 30 lines) ──
+INFO:     Started server process [4452]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9002 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53362 - "GET /search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53380 - "GET /search HTTP/1.1" 200 OK
+
+── tools.log (last 30 lines) ──
+INFO:     Started server process [4454]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9003 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53364 - "GET /call HTTP/1.1" 200 OK
+
+── Prometheus logs (last 30 lines) ──
+prometheus-1  | ts=2026-03-14T09:46:41.573Z caller=main.go:601 level=info msg="No time or size retention was set so using the default time retention" duration=15d
+prometheus-1  | ts=2026-03-14T09:46:41.574Z caller=main.go:645 level=info msg="Starting Prometheus Server" mode=server version="(version=2.54.1, branch=HEAD, revision=e6cfa720fbe6280153fab13090a483dbd40bece3)"
+prometheus-1  | ts=2026-03-14T09:46:41.574Z caller=main.go:650 level=info build_context="(go=go1.22.6, platform=linux/arm64, user=root@812ffd741951, date=20240827-10:59:03, tags=netgo,builtinassets,stringlabels)"
+prometheus-1  | ts=2026-03-14T09:46:41.574Z caller=main.go:651 level=info host_details="(Linux 6.12.72-linuxkit #1 SMP Wed Feb 25 13:21:17 UTC 2026 aarch64 3b2e2ecdb826 (none))"
+prometheus-1  | ts=2026-03-14T09:46:41.574Z caller=main.go:652 level=info fd_limits="(soft=1048576, hard=1048576)"
+prometheus-1  | ts=2026-03-14T09:46:41.574Z caller=main.go:653 level=info vm_limits="(soft=unlimited, hard=unlimited)"
+prometheus-1  | ts=2026-03-14T09:46:41.577Z caller=web.go:571 level=info component=web msg="Start listening for connections" address=0.0.0.0:9090
+prometheus-1  | ts=2026-03-14T09:46:41.578Z caller=main.go:1160 level=info msg="Starting TSDB ..."
+prometheus-1  | ts=2026-03-14T09:46:41.579Z caller=tls_config.go:313 level=info component=web msg="Listening on" address=[::]:9090
+prometheus-1  | ts=2026-03-14T09:46:41.580Z caller=tls_config.go:316 level=info component=web msg="TLS is disabled." http2=false address=[::]:9090
+prometheus-1  | ts=2026-03-14T09:46:41.582Z caller=head.go:626 level=info component=tsdb msg="Replaying on-disk memory mappable chunks if any"
+prometheus-1  | ts=2026-03-14T09:46:41.582Z caller=head.go:713 level=info component=tsdb msg="On-disk memory mappable chunks replay completed" duration=9.167µs
+prometheus-1  | ts=2026-03-14T09:46:41.582Z caller=head.go:721 level=info component=tsdb msg="Replaying WAL, this may take a while"
+prometheus-1  | ts=2026-03-14T09:46:41.583Z caller=head.go:793 level=info component=tsdb msg="WAL segment loaded" segment=0 maxSegment=0
+prometheus-1  | ts=2026-03-14T09:46:41.583Z caller=head.go:830 level=info component=tsdb msg="WAL replay completed" checkpoint_replay_duration=11.541µs wal_replay_duration=820.792µs wbl_replay_duration=167ns chunk_snapshot_load_duration=0s mmap_chunk_replay_duration=9.167µs total_replay_duration=852.834µs
+prometheus-1  | ts=2026-03-14T09:46:41.584Z caller=main.go:1181 level=info fs_type=EXT4_SUPER_MAGIC
+prometheus-1  | ts=2026-03-14T09:46:41.584Z caller=main.go:1184 level=info msg="TSDB started"
+prometheus-1  | ts=2026-03-14T09:46:41.584Z caller=main.go:1367 level=info msg="Loading configuration file" filename=/etc/prometheus/prometheus.yml
+prometheus-1  | ts=2026-03-14T09:46:41.586Z caller=main.go:1404 level=info msg="updated GOGC" old=100 new=75
+prometheus-1  | ts=2026-03-14T09:46:41.586Z caller=main.go:1415 level=info msg="Completed loading of configuration file" filename=/etc/prometheus/prometheus.yml totalDuration=2.571208ms db_storage=708ns remote_storage=709ns web_handler=291ns query_engine=542ns scrape=179.083µs scrape_sd=19.291µs notify=750ns notify_sd=500ns rules=1.798667ms tracing=3.084µs
+prometheus-1  | ts=2026-03-14T09:46:41.586Z caller=main.go:1145 level=info msg="Server is ready to receive web requests."
+prometheus-1  | ts=2026-03-14T09:46:41.587Z caller=manager.go:164 level=info component="rule manager" msg="Starting rule manager..."
+
+── Grafana logs (last 20 lines) ──
+grafana-1  | logger=infra.usagestats.collector t=2026-03-14T09:46:42.497245293Z level=info msg="registering usage stat providers" usageStatsProvidersLen=2
+grafana-1  | logger=provisioning.datasources t=2026-03-14T09:46:42.498388002Z level=info msg="inserting datasource from configuration" name=Prometheus uid=prometheus
+grafana-1  | logger=provisioning.plugins t=2026-03-14T09:46:42.504595502Z level=error msg="Failed to read plugin provisioning files from directory" path=/etc/grafana/provisioning/plugins error="open /etc/grafana/provisioning/plugins: no such file or directory"
+grafana-1  | logger=provisioning.alerting t=2026-03-14T09:46:42.504744502Z level=error msg="can't read alerting provisioning files from directory" path=/etc/grafana/provisioning/alerting error="open /etc/grafana/provisioning/alerting: no such file or directory"
+grafana-1  | logger=provisioning.alerting t=2026-03-14T09:46:42.50476471Z level=info msg="starting to provision alerting"
+grafana-1  | logger=provisioning.alerting t=2026-03-14T09:46:42.504768877Z level=info msg="finished to provision alerting"
+grafana-1  | logger=grafanaStorageLogger t=2026-03-14T09:46:42.505764793Z level=info msg="Storage starting"
+grafana-1  | logger=ngalert.state.manager t=2026-03-14T09:46:42.505901043Z level=info msg="Warming state cache for startup"
+grafana-1  | logger=ngalert.multiorg.alertmanager t=2026-03-14T09:46:42.506081668Z level=info msg="Starting MultiOrg Alertmanager"
+grafana-1  | logger=provisioning.dashboard t=2026-03-14T09:46:42.506567002Z level=info msg="starting to provision dashboards"
+grafana-1  | logger=ngalert.state.manager t=2026-03-14T09:46:42.506947793Z level=info msg="State cache has been initialized" states=0 duration=1.04475ms
+grafana-1  | logger=ngalert.scheduler t=2026-03-14T09:46:42.506980252Z level=info msg="Starting scheduler" tickInterval=10s maxAttempts=1
+grafana-1  | logger=ticker t=2026-03-14T09:46:42.507045752Z level=info msg=starting first_tick=2026-03-14T09:46:50Z
+grafana-1  | logger=http.server t=2026-03-14T09:46:42.508442418Z level=info msg="HTTP Server Listen" address=[::]:3000 protocol=http subUrl= socket=
+grafana-1  | logger=provisioning.dashboard t=2026-03-14T09:46:42.537461668Z level=info msg="finished to provision dashboards"
+grafana-1  | logger=grafana-apiserver t=2026-03-14T09:46:42.782418919Z level=info msg="Adding GroupVersion playlist.grafana.app v0alpha1 to ResourceManager"
+grafana-1  | logger=grafana-apiserver t=2026-03-14T09:46:42.782637419Z level=info msg="Adding GroupVersion featuretoggle.grafana.app v0alpha1 to ResourceManager"
+grafana-1  | logger=plugins.update.checker t=2026-03-14T09:46:42.831065252Z level=info msg="Update check succeeded" duration=324.969667ms
+grafana-1  | logger=grafana.update.checker t=2026-03-14T09:46:42.834623294Z level=info msg="Update check succeeded" duration=328.839333ms
+grafana-1  | logger=plugin.angulardetectorsprovider.dynamic t=2026-03-14T09:46:42.834764127Z level=info msg="Patterns update finished" duration=327.043292ms
+
+════════════════════════════════════════════════════════
+ SUMMARY: 11/11 passed  |  0 failed  |  0 warnings
+════════════════════════════════════════════════════════
+
+HTML report → /Users/rt-prime/FSM/01-Active/02-Pluralsight/reliability-slos-incident-management-gen-ai-systems/repo/module-02-slis-slos-slas/demo-clip4-slo-burnrate-freeze/.run/preflight_report.html
+Full log    → /Users/rt-prime/FSM/01-Active/02-Pluralsight/reliability-slos-incident-management-gen-ai-systems/repo/module-02-slis-slos-slas/demo-clip4-slo-burnrate-freeze/.run/preflight_20260314_151643.log
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Pre-flight — Mod 3 Clip 2</title>
+<style>* { box-sizing:border-box;margin:0;padding:0 }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f6f8fa;color:#1f2328;padding:32px }
+.card { background:white;border-radius:8px;border:1px solid #d0d7de;max-width:960px;margin:0 auto;overflow:hidden }
+.header { padding:24px 32px;border-bottom:1px solid #d0d7de }
+.badge { display:inline-block;padding:6px 16px;border-radius:20px;font-weight:700;font-size:14px;color:white;background:#1a7f37;margin-top:8px }
+.meta { color:#666;font-size:13px;margin-top:6px }
+table { width:100%;border-collapse:collapse }
+th { padding:10px 16px;text-align:left;background:#f6f8fa;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#666;border-bottom:2px solid #d0d7de }
+.footer { padding:16px 32px;background:#f6f8fa;border-top:1px solid #d0d7de;font-size:12px;color:#666 }
+code { background:#f3f4f5;padding:1px 5px;border-radius:4px;font-family:'SF Mono',Consolas,monospace;font-size:12px }</style>
+</head><body><div class="card">
+  <div class="header">
+    <div style="font-size:20px;font-weight:700">Pre-flight Check — Mod 3 Clip 2</div>
+    <div style="font-size:13px;color:#666;margin-top:2px">Retries and Circuit Breakers with HTTPX</div>
+    <div class="badge">ALL CHECKS PASSED — READY TO RECORD</div>
+    <div class="meta">Sun Mar 15 17:19:45 IST 2026 &nbsp;·&nbsp; 9/9 passed &nbsp;·&nbsp; 0 failed &nbsp;·&nbsp; Log: <code>preflight_20260315_171943.log</code></div>
+  </div>
+  <table><thead><tr>
+    <th style="width:130px">Status</th>
+    <th style="width:180px">Check</th>
+    <th>Detail &amp; Fix</th>
+  </tr></thead><tbody><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Python</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>Python 3.9.6</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Docker</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>Docker 29.2.1 running</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Venv and deps</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>fastapi uvicorn httpx prometheus_client all importable</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>App /health</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>model_breaker=CLOSED vector_breaker=CLOSED</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Model stub</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>mode=healthy</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Vector stub</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>mode=healthy</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>End-to-end /ask</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>model_breaker=CLOSED latency=339ms</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Prometheus</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>Responding at :9090</td>
+  </tr><tr style='border-bottom:1px solid #e6e6e6'>
+    <td style='padding:12px 16px;vertical-align:top;white-space:nowrap'>
+      <span style='font-weight:700;color:#1a7f37;font-size:16px'>✓</span>
+      <span style='display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600;background:#dafbe1;color:#1a7f37;margin-left:6px'>PASS</span>
+    </td>
+    <td style='padding:12px 16px;vertical-align:top;font-weight:600'>Grafana</td>
+    <td style='padding:12px 16px;vertical-align:top;color:#555;font-size:13px'>Accessible at localhost:3000</td>
+  </tr></tbody></table>
+  <div class="footer">Log: <code>/Users/rt-prime/FSM/01-Active/02-Pluralsight/reliability-slos-incident-management-gen-ai-systems/repo/module-03-failure-handling-resilience/demo-clip2-retries-circuit-breakers/.run/preflight_20260315_171943.log</code></div>
+</div></body></html>

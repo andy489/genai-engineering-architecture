@@ -1,0 +1,336 @@
+
+[restart] Killing app and restarting with fresh state...
+[restart] Done — breaker CLOSED, budget empty, stubs healthy
+
+
+════════════════════════════════════════════════════════
+  14:14:25  SCENE 1 — Time Budgets Fire
+════════════════════════════════════════════════════════
+
+── Config: MODEL_TIMEOUT_S and VECTOR_TIMEOUT_S ──
+MODEL_TIMEOUT_S = 3.0  # hard budget for model API
+VECTOR_TIMEOUT_S = 2.0  # hard budget for vector DB
+
+── Set model → slow then POST /ask ──
+model=slow
+{
+    "detail": "Model API unavailable"
+}
+
+── App log tail (MUST show: reason=timeout retryable=True AND RETRY lines) ──
+14:14:25  INFO   GenAI service started
+14:14:25  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:14:25  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:14:28  WARNING  DEP  model_api  attempt=0  status=—  reason=timeout  retryable=True
+14:14:28  INFO   RETRY  model_api  attempt=0→1  backoff=0.37s
+14:14:31  WARNING  DEP  model_api  attempt=1  status=—  reason=timeout  retryable=True
+14:14:31  INFO   RETRY  model_api  attempt=1→2  backoff=0.54s
+14:14:35  WARNING  DEP  model_api  attempt=2  status=—  reason=timeout  retryable=True
+14:14:35  INFO   RETRY  model_api  attempt=2→3  backoff=1.57s
+14:14:40  WARNING  DEP  model_api  attempt=3  status=—  reason=timeout  retryable=True
+14:14:40  ERROR  Model API unavailable: 
+
+
+════════════════════════════════════════════════════════
+  14:14:40  SCENE 2 — Backoff, Retry Limits, Retry Budget
+════════════════════════════════════════════════════════
+
+── Set model → throttle (429) then POST /ask ──
+model=throttle
+{
+    "detail": "Model API unavailable"
+}
+
+── App log tail (MUST show: attempt=0→1, 1→2, 2→3 with different backoff values) ──
+14:14:31  INFO   RETRY  model_api  attempt=1→2  backoff=0.54s
+14:14:35  WARNING  DEP  model_api  attempt=2  status=—  reason=timeout  retryable=True
+14:14:35  INFO   RETRY  model_api  attempt=2→3  backoff=1.57s
+14:14:40  WARNING  DEP  model_api  attempt=3  status=—  reason=timeout  retryable=True
+14:14:40  ERROR  Model API unavailable: 
+14:14:40  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:14:40  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:14:40  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+14:14:40  WARNING  DEP  model_api  attempt=0  status=429  reason=429  retryable=True
+14:14:40  INFO   RETRY  model_api  attempt=0→1  backoff=0.41s
+14:14:40  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+14:14:40  WARNING  DEP  model_api  attempt=1  status=429  reason=429  retryable=True
+14:14:40  INFO   RETRY  model_api  attempt=1→2  backoff=0.47s
+14:14:41  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+14:14:41  WARNING  DEP  model_api  attempt=2  status=429  reason=429  retryable=True
+14:14:41  INFO   RETRY  model_api  attempt=2→3  backoff=1.16s
+14:14:42  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+14:14:42  WARNING  DEP  model_api  attempt=3  status=429  reason=429  retryable=True
+14:14:42  ERROR  Model API unavailable: Client error '429 Too Many Requests' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+── Breaker status (MUST be: state CLOSED, failure_count > 0) ──
+{
+    "model_api": {
+        "state": "CLOSED",
+        "failure_count": 2
+    },
+    "vector_db": {
+        "state": "CLOSED",
+        "failure_count": 0
+    }
+}
+
+
+════════════════════════════════════════════════════════
+  14:14:42  SCENE 3 — Safe Failure Class Allow-List
+════════════════════════════════════════════════════════
+
+── Code: RETRYABLE_STATUS_CODES and _is_retryable (MUST be visible) ──
+RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+
+# ---------------------------------------------------------------------------
+# Prometheus metrics
+# ---------------------------------------------------------------------------
+REQUEST_TOTAL = Counter(
+    "genai_requests_total",
+    "Total inbound requests",
+    ["endpoint"],
+--
+def _is_retryable(exc: Exception) -> tuple[bool, str]:
+    """Return (should_retry, reason) for the given exception."""
+    if isinstance(exc, httpx.TimeoutException):
+        return True, "timeout"
+
+
+════════════════════════════════════════════════════════
+  14:14:42  SCENE 4 — Baseline + Breaker OPEN + Fast-Fail + Bulkhead
+════════════════════════════════════════════════════════
+
+── Baseline: model → healthy, send 1 request (MUST succeed) ──
+model=healthy
+{
+    "answer": "Model response for: What is an SLO?",
+    "latency_ms": 272,
+    "model_breaker": "CLOSED",
+    "vector_breaker": "CLOSED"
+}
+
+── Set model → error (500), send 7 requests to trip breaker ──
+model=error
+
+--- request 1 ---
+{
+    "detail": "Model API unavailable"
+}
+
+--- request 2 ---
+{
+    "detail": "Model API unavailable"
+}
+
+--- request 3 ---
+{
+    "detail": "Model API unavailable"
+}
+
+--- request 4 ---
+{
+    "detail": "Model API unavailable"
+}
+
+--- request 5 ---
+{
+    "detail": "Model API unavailable"
+}
+
+--- request 6 ---
+{
+    "detail": "model_api circuit breaker is open"
+}
+
+--- request 7 ---
+{
+    "detail": "model_api circuit breaker is open"
+}
+
+── App log tail (MUST show: CLOSED → OPEN and OPEN — request rejected) ──
+14:14:52  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+14:14:52  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+14:14:52  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:14:52  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:14:52  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+14:14:52  WARNING  DEP  model_api  attempt=0  status=500  reason=5xx  retryable=True
+14:14:52  INFO   RETRY  model_api  attempt=0→1  backoff=0.34s
+14:14:53  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+14:14:53  WARNING  DEP  model_api  attempt=1  status=500  reason=5xx  retryable=True
+14:14:53  INFO   RETRY  model_api  attempt=1→2  backoff=0.32s
+14:14:53  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+14:14:53  WARNING  DEP  model_api  attempt=2  status=500  reason=5xx  retryable=True
+14:14:53  INFO   RETRY  model_api  attempt=2→3  backoff=1.41s
+14:14:54  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+14:14:54  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+14:14:54  INFO   BREAKER  model_api  CLOSED → OPEN
+14:14:54  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+14:14:55  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:14:55  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:14:55  WARNING  BREAKER  model_api  OPEN — request rejected
+14:14:55  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:14:55  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:14:55  WARNING  BREAKER  model_api  OPEN — request rejected
+
+── Breaker status (MUST be: model_api OPEN, vector_db CLOSED) ──
+{
+    "model_api": {
+        "state": "OPEN",
+        "failure_count": 5
+    },
+    "vector_db": {
+        "state": "CLOSED",
+        "failure_count": 0
+    }
+}
+
+── Fast-fail: 3 requests while OPEN (MUST be < 300ms each) ──
+
+--- fast-fail 1 ---
+{
+    "detail": "model_api circuit breaker is open"
+}
+  elapsed: 0.104s  ✅ PASS
+
+--- fast-fail 2 ---
+{
+    "detail": "model_api circuit breaker is open"
+}
+  elapsed: 0.154s  ✅ PASS
+
+--- fast-fail 3 ---
+{
+    "detail": "model_api circuit breaker is open"
+}
+  elapsed: 0.119s  ✅ PASS
+
+[restart] Killing app and restarting with fresh state...
+scripts/validate_demo.sh: line 22: 78655 Killed: 9               nohup .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --log-level warning > .run/app.log 2>&1
+[restart] Done — breaker CLOSED, budget empty, stubs healthy
+
+
+════════════════════════════════════════════════════════
+  14:14:58  SCENE 5 — Half-Open Recovery
+════════════════════════════════════════════════════════
+
+── Trip breaker cleanly: model → error, send 6 requests ──
+model=error
+Breaker state after trip:
+{
+    "model_api": {
+        "state": "OPEN",
+        "failure_count": 5
+    },
+    "vector_db": {
+        "state": "CLOSED",
+        "failure_count": 0
+    }
+}
+
+── Restore model → healthy. Waiting 12s for recovery timeout. ──
+model=healthy
+Waiting 12s...
+
+── Send 4 probes — MUST show OPEN→HALF_OPEN→probe 1/2→probe 2/2→CLOSED ──
+
+--- probe 1 ---
+{
+    "answer": "Model response for: probe",
+    "latency_ms": 437,
+    "model_breaker": "HALF_OPEN",
+    "vector_breaker": "CLOSED"
+}
+
+--- probe 2 ---
+{
+    "answer": "Model response for: probe",
+    "latency_ms": 302,
+    "model_breaker": "CLOSED",
+    "vector_breaker": "CLOSED"
+}
+
+--- probe 3 ---
+{
+    "answer": "Model response for: probe",
+    "latency_ms": 199,
+    "model_breaker": "CLOSED",
+    "vector_breaker": "CLOSED"
+}
+
+--- probe 4 ---
+{
+    "answer": "Model response for: probe",
+    "latency_ms": 322,
+    "model_breaker": "CLOSED",
+    "vector_breaker": "CLOSED"
+}
+
+── App log tail (MUST contain all 4 transition lines) ──
+14:15:23  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:15:23  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:15:23  INFO   BREAKER  model_api  OPEN → HALF_OPEN
+14:15:24  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+14:15:24  INFO   BREAKER  model_api  half-open probe OK (1/2)
+14:15:24  INFO   DEP  model_api  attempt=0  status=200  OK
+14:15:24  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:15:24  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:15:25  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+14:15:25  INFO   BREAKER  model_api  half-open probe OK (2/2)
+14:15:25  INFO   BREAKER  model_api  HALF_OPEN → CLOSED
+14:15:25  INFO   DEP  model_api  attempt=0  status=200  OK
+14:15:26  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:15:26  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:15:26  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+14:15:26  INFO   DEP  model_api  attempt=0  status=200  OK
+14:15:27  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+14:15:27  INFO   DEP  vector_db  attempt=0  status=200  OK
+14:15:27  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+14:15:27  INFO   DEP  model_api  attempt=0  status=200  OK
+
+── Final breaker status (MUST be: both CLOSED, failure_count 0) ──
+{
+    "model_api": {
+        "state": "CLOSED",
+        "failure_count": 0
+    },
+    "vector_db": {
+        "state": "CLOSED",
+        "failure_count": 0
+    }
+}
+
+
+════════════════════════════════════════════════════════
+  14:15:28  SCENE 6 — Prometheus Proof
+════════════════════════════════════════════════════════
+
+── genai_circuit_breaker_transitions_total (MUST include closed→open and half_open→closed) ──
+  (Prometheus not reachable)
+
+── genai_retries_total by reason (MUST show timeout, 429, 5xx) ──
+  (Prometheus not reachable)
+
+
+════════════════════════════════════════════════════════
+  14:15:28  AUTO PASS/FAIL SUMMARY
+════════════════════════════════════════════════════════
+
+  ❌  Scene 1 — reason=timeout retryable=True
+  ✅  Scene 2 — backoff attempt=0→1
+  ✅  Scene 2 — backoff attempt=1→2
+  ✅  Scene 2 — backoff attempt=2→3
+  ✅  Scene 4 — CLOSED → OPEN
+  ✅  Scene 4 — OPEN — request rejected
+  ✅  Scene 5 — OPEN → HALF_OPEN
+  ✅  Scene 5 — half-open probe OK (1/2)
+  ✅  Scene 5 — half-open probe OK (2/2)
+  ✅  Scene 5 — HALF_OPEN → CLOSED
+
+  ────────────────────────────────────────────────
+  RESULT: 9/10 passed · 1 failed
+  ❌  1 PROOF POINT(S) MISSING — DO NOT RECORD YET
+  ────────────────────────────────────────────────
+

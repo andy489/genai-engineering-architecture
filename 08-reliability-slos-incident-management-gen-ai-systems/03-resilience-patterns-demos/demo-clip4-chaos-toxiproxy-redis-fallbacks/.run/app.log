@@ -1,0 +1,155 @@
+01:38:56  INFO   Redis connected at redis://localhost:6379
+01:38:56  INFO   GenAI chaos service started
+01:38:56  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+01:38:56  INFO   DEP  vector_db  status=200  elapsed=0.11s  OK
+01:38:57  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+01:38:57  INFO   DEP  model_api  status=200  elapsed=0.23s  OK
+01:38:57  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+01:39:04  INFO   IDEM  key=demo-key-001  status=in-progress  set in Redis
+01:39:04  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+01:39:04  INFO   DEP  model_api_tool  status=200  elapsed=0.22s  OK
+01:39:04  INFO   IDEM  key=demo-key-001  status=succeeded  result stored in Redis
+01:40:14  INFO   IDEM  key=demo-key-001  status=succeeded  returning stored result  (tool NOT re-executed)
+01:53:41  INFO   IDEM  key=demo-key-001  status=in-progress  set in Redis
+01:53:41  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+01:53:41  INFO   DEP  model_api_tool  status=200  elapsed=0.16s  OK
+01:53:41  INFO   IDEM  key=demo-key-001  status=succeeded  result stored in Redis
+02:22:12  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:22:12  INFO   DEP  vector_db  status=200  elapsed=0.15s  OK
+02:22:12  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:22:12  INFO   DEP  model_api  status=200  elapsed=0.29s  OK
+02:22:12  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:22:13  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:22:13  INFO   DEP  vector_db  status=200  elapsed=0.08s  OK
+02:22:14  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:22:14  INFO   DEP  model_api  status=200  elapsed=0.16s  OK
+02:22:14  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:22:15  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:22:15  INFO   DEP  vector_db  status=200  elapsed=0.13s  OK
+02:22:15  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:22:15  INFO   DEP  model_api  status=200  elapsed=0.12s  OK
+02:22:15  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:22:16  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:22:16  INFO   DEP  vector_db  status=200  elapsed=0.15s  OK
+02:22:16  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:22:16  INFO   DEP  model_api  status=200  elapsed=0.27s  OK
+02:22:16  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:22:17  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:22:17  INFO   DEP  vector_db  status=200  elapsed=0.09s  OK
+02:22:18  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:22:18  INFO   DEP  model_api  status=200  elapsed=0.31s  OK
+02:22:18  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:19  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:19  INFO   DEP  vector_db  status=200  elapsed=0.10s  OK
+02:26:20  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:20  INFO   DEP  model_api  status=200  elapsed=0.16s  OK
+02:26:20  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:20  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:20  INFO   DEP  vector_db  status=200  elapsed=0.11s  OK
+02:26:20  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:20  INFO   DEP  model_api  status=200  elapsed=0.27s  OK
+02:26:20  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:21  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:21  INFO   DEP  vector_db  status=200  elapsed=0.09s  OK
+02:26:21  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:21  INFO   DEP  model_api  status=200  elapsed=0.16s  OK
+02:26:21  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:22  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:22  INFO   DEP  vector_db  status=200  elapsed=0.08s  OK
+02:26:22  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:22  INFO   DEP  model_api  status=200  elapsed=0.19s  OK
+02:26:22  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:23  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:23  INFO   DEP  vector_db  status=200  elapsed=0.11s  OK
+02:26:23  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:23  INFO   DEP  model_api  status=200  elapsed=0.29s  OK
+02:26:23  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:24  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:24  INFO   DEP  vector_db  status=200  elapsed=0.07s  OK
+02:26:24  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:24  INFO   DEP  model_api  status=200  elapsed=0.14s  OK
+02:26:24  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:26:26  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:26  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:29  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:29  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:32  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:32  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:35  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:35  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:38  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:38  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:41  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:41  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:43  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:43  INFO   DEP  vector_db  status=200  elapsed=0.07s  OK
+02:26:43  WARNING  DEP  model_api  error=Server disconnected without sending a response.
+02:26:43  WARNING  CACHE  model_api  miss on live call  serving cached answer
+02:26:44  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:44  INFO   DEP  vector_db  status=200  elapsed=0.11s  OK
+02:26:44  WARNING  DEP  model_api  error=Server disconnected without sending a response.
+02:26:44  WARNING  CACHE  model_api  miss on live call  serving cached answer
+02:26:45  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:45  INFO   DEP  vector_db  status=200  elapsed=0.10s  OK
+02:26:46  WARNING  DEP  model_api  error=Server disconnected without sending a response.
+02:26:46  WARNING  CACHE  model_api  miss on live call  serving cached answer
+02:26:47  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:26:47  INFO   DEP  vector_db  status=200  elapsed=0.13s  OK
+02:26:47  WARNING  DEP  model_api  error=Server disconnected without sending a response.
+02:26:47  WARNING  CACHE  model_api  miss on live call  serving cached answer
+02:26:48  INFO   IDEM  key=idem-story-001  status=in-progress  set in Redis
+02:26:48  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:48  INFO   DEP  model_api_tool  status=200  elapsed=0.19s  OK
+02:26:48  INFO   IDEM  key=idem-story-001  status=succeeded  result stored in Redis
+02:26:48  INFO   IDEM  key=idem-story-001  status=succeeded  returning stored result  (tool NOT re-executed)
+02:26:48  INFO   IDEM  key=idem-story-002  status=in-progress  set in Redis
+02:26:49  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:26:49  INFO   DEP  model_api_tool  status=200  elapsed=0.14s  OK
+02:26:49  INFO   IDEM  key=idem-story-002  status=succeeded  result stored in Redis
+02:26:49  INFO   IDEM  key=idem-story-002  status=succeeded  returning stored result  (tool NOT re-executed)
+02:26:51  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:51  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:54  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:54  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:56  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:56  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:26:59  WARNING  DEP  vector_db  timeout after 2.00s
+02:26:59  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:27:02  WARNING  DEP  vector_db  timeout after 2.00s
+02:27:02  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:27:05  WARNING  DEP  vector_db  timeout after 2.00s
+02:27:05  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:27:08  WARNING  DEP  vector_db  timeout after 2.00s
+02:27:08  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:27:11  WARNING  DEP  vector_db  timeout after 2.00s
+02:27:11  WARNING  CACHE  vector_db  miss on live call  serving cached answer
+02:27:12  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:27:12  INFO   DEP  vector_db  status=200  elapsed=0.07s  OK
+02:27:12  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:27:12  INFO   DEP  model_api  status=200  elapsed=0.14s  OK
+02:27:12  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:27:13  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:27:13  INFO   DEP  vector_db  status=200  elapsed=0.14s  OK
+02:27:13  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:27:13  INFO   DEP  model_api  status=200  elapsed=0.29s  OK
+02:27:13  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:27:14  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:27:14  INFO   DEP  vector_db  status=200  elapsed=0.14s  OK
+02:27:14  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:27:14  INFO   DEP  model_api  status=200  elapsed=0.22s  OK
+02:27:14  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:27:14  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:27:14  INFO   DEP  vector_db  status=200  elapsed=0.06s  OK
+02:27:15  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:27:15  INFO   DEP  model_api  status=200  elapsed=0.19s  OK
+02:27:15  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:27:15  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:27:15  INFO   DEP  vector_db  status=200  elapsed=0.13s  OK
+02:27:15  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:27:15  INFO   DEP  model_api  status=200  elapsed=0.21s  OK
+02:27:15  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s
+02:27:16  INFO   HTTP Request: POST http://localhost:8092/search "HTTP/1.1 200 OK"
+02:27:16  INFO   DEP  vector_db  status=200  elapsed=0.10s  OK
+02:27:16  INFO   HTTP Request: POST http://localhost:8091/generate "HTTP/1.1 200 OK"
+02:27:16  INFO   DEP  model_api  status=200  elapsed=0.28s  OK
+02:27:16  INFO   CACHE  stored  key=cache:605b6e940879922c  ttl=300s

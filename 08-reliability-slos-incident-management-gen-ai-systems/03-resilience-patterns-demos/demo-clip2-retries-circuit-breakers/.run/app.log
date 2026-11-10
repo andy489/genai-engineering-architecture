@@ -1,0 +1,136 @@
+20:26:24  INFO   GenAI service started
+20:27:34  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:27:34  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:27:37  WARNING  DEP  model_api  attempt=0  status=—  reason=timeout  retryable=True
+20:27:37  INFO   RETRY  model_api  attempt=0→1  backoff=0.28s
+20:27:40  WARNING  DEP  model_api  attempt=1  status=—  reason=timeout  retryable=True
+20:27:40  INFO   RETRY  model_api  attempt=1→2  backoff=0.73s
+20:27:44  WARNING  DEP  model_api  attempt=2  status=—  reason=timeout  retryable=True
+20:27:44  INFO   RETRY  model_api  attempt=2→3  backoff=1.18s
+20:27:48  WARNING  DEP  model_api  attempt=3  status=—  reason=timeout  retryable=True
+20:27:48  ERROR  Model API unavailable: 
+20:28:21  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:28:21  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:28:21  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+20:28:21  WARNING  DEP  model_api  attempt=0  status=429  reason=429  retryable=True
+20:28:21  INFO   RETRY  model_api  attempt=0→1  backoff=0.20s
+20:28:21  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+20:28:21  WARNING  DEP  model_api  attempt=1  status=429  reason=429  retryable=True
+20:28:21  INFO   RETRY  model_api  attempt=1→2  backoff=0.83s
+20:28:22  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+20:28:22  WARNING  DEP  model_api  attempt=2  status=429  reason=429  retryable=True
+20:28:22  INFO   RETRY  model_api  attempt=2→3  backoff=1.02s
+20:28:23  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 429 Too Many Requests"
+20:28:23  WARNING  DEP  model_api  attempt=3  status=429  reason=429  retryable=True
+20:28:23  ERROR  Model API unavailable: Client error '429 Too Many Requests' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+20:29:53  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:29:53  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:29:53  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+20:29:53  INFO   DEP  model_api  attempt=0  status=200  OK
+20:30:48  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:30:48  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:30:48  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:48  WARNING  DEP  model_api  attempt=0  status=500  reason=5xx  retryable=True
+20:30:48  INFO   RETRY  model_api  attempt=0→1  backoff=0.25s
+20:30:49  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:49  WARNING  DEP  model_api  attempt=1  status=500  reason=5xx  retryable=True
+20:30:49  INFO   RETRY  model_api  attempt=1→2  backoff=0.34s
+20:30:49  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:49  WARNING  DEP  model_api  attempt=2  status=500  reason=5xx  retryable=True
+20:30:49  INFO   RETRY  model_api  attempt=2→3  backoff=1.62s
+20:30:51  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:51  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+20:30:51  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+20:30:51  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:30:51  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:30:51  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:51  WARNING  DEP  model_api  attempt=0  status=500  reason=5xx  retryable=True
+20:30:51  INFO   RETRY  model_api  attempt=0→1  backoff=0.27s
+20:30:51  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:51  WARNING  DEP  model_api  attempt=1  status=500  reason=5xx  retryable=True
+20:30:51  INFO   RETRY  model_api  attempt=1→2  backoff=0.70s
+20:30:52  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:52  WARNING  DEP  model_api  attempt=2  status=500  reason=5xx  retryable=True
+20:30:52  INFO   RETRY  model_api  attempt=2→3  backoff=0.74s
+20:30:53  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:53  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+20:30:53  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+20:30:53  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:30:53  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:30:53  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:53  WARNING  DEP  model_api  attempt=0  status=500  reason=5xx  retryable=True
+20:30:53  INFO   RETRY  model_api  attempt=0→1  backoff=0.40s
+20:30:54  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:54  WARNING  DEP  model_api  attempt=1  status=500  reason=5xx  retryable=True
+20:30:54  INFO   RETRY  model_api  attempt=1→2  backoff=0.33s
+20:30:54  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:54  WARNING  DEP  model_api  attempt=2  status=500  reason=5xx  retryable=True
+20:30:54  INFO   RETRY  model_api  attempt=2→3  backoff=1.07s
+20:30:55  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:55  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+20:30:55  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+20:30:55  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:30:55  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:30:56  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:56  WARNING  DEP  model_api  attempt=0  status=500  reason=5xx  retryable=True
+20:30:56  INFO   RETRY  model_api  attempt=0→1  backoff=0.19s
+20:30:56  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:56  WARNING  DEP  model_api  attempt=1  status=500  reason=5xx  retryable=True
+20:30:56  INFO   RETRY  model_api  attempt=1→2  backoff=0.85s
+20:30:57  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:57  WARNING  DEP  model_api  attempt=2  status=500  reason=5xx  retryable=True
+20:30:57  INFO   RETRY  model_api  attempt=2→3  backoff=0.96s
+20:30:58  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:58  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+20:30:58  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+20:30:58  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:30:58  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:30:58  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:58  WARNING  DEP  model_api  attempt=0  status=500  reason=5xx  retryable=True
+20:30:58  INFO   RETRY  model_api  attempt=0→1  backoff=0.38s
+20:30:58  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:58  WARNING  DEP  model_api  attempt=1  status=500  reason=5xx  retryable=True
+20:30:58  INFO   RETRY  model_api  attempt=1→2  backoff=0.48s
+20:30:59  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:30:59  WARNING  DEP  model_api  attempt=2  status=500  reason=5xx  retryable=True
+20:30:59  INFO   RETRY  model_api  attempt=2→3  backoff=0.83s
+20:31:00  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 500 Internal Server Error"
+20:31:00  WARNING  DEP  model_api  attempt=3  status=500  reason=5xx  retryable=True
+20:31:00  INFO   BREAKER  model_api  CLOSED → OPEN
+20:31:00  ERROR  Model API unavailable: Server error '500 Internal Server Error' for url 'http://localhost:8081/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+20:31:00  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:31:00  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:31:00  WARNING  BREAKER  model_api  OPEN — request rejected
+20:31:01  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:31:01  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:31:01  WARNING  BREAKER  model_api  OPEN — request rejected
+20:33:38  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:33:38  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:33:38  INFO   BREAKER  model_api  OPEN → HALF_OPEN
+20:33:38  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+20:33:38  INFO   BREAKER  model_api  half-open probe OK (1/2)
+20:33:38  INFO   DEP  model_api  attempt=0  status=200  OK
+20:33:39  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:33:39  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:33:39  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+20:33:40  INFO   BREAKER  model_api  half-open probe OK (2/2)
+20:33:40  INFO   BREAKER  model_api  HALF_OPEN → CLOSED
+20:33:40  INFO   DEP  model_api  attempt=0  status=200  OK
+20:33:40  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:33:40  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:33:41  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+20:33:41  INFO   DEP  model_api  attempt=0  status=200  OK
+20:33:42  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:33:42  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:33:42  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+20:33:42  INFO   DEP  model_api  attempt=0  status=200  OK
+20:33:43  INFO   HTTP Request: POST http://localhost:8082/search "HTTP/1.1 200 OK"
+20:33:43  INFO   DEP  vector_db  attempt=0  status=200  OK
+20:33:43  INFO   HTTP Request: POST http://localhost:8081/generate "HTTP/1.1 200 OK"
+20:33:43  INFO   DEP  model_api  attempt=0  status=200  OK

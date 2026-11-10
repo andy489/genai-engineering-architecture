@@ -1,0 +1,37 @@
+════════════════════════════════════════════════════════
+ Pre-flight — Mod 3 Clip 2: Retries and Circuit Breakers
+ Sun Mar 15 17:02:18 IST 2026
+════════════════════════════════════════════════════════
+
+── [1/8] Python version ──
+[0;32m✓[0m Python 3.9.6
+
+── [2/8] Docker daemon ──
+[0;31m✗[0m Docker not running
+
+── [3/8] Venv and dependencies ──
+[0;32m✓[0m All packages importable
+
+── [4/8] App /health (:8000) ──
+[0;31m✗[0m App not responding
+
+── [5/8] Dependency stubs ──
+[0;31m✗[0m model-stub :8081 not responding
+[0;31m✗[0m vector-stub :8082 not responding
+
+── [6/8] End-to-end /ask ──
+[0;31m✗[0m POST /ask failed
+
+── [7/8] Prometheus (:9090) ──
+[0;31m✗[0m Prometheus not responding
+
+── [8/8] Grafana (:3000) ──
+[0;31m✗[0m Grafana not responding
+
+════════════════════════════════════════════════════════
+ SUMMARY: 2/9 passed  |  7 failed  |  0 warnings
+════════════════════════════════════════════════════════
+
+HTML report → /Users/rt-prime/FSM/01-Active/02-Pluralsight/reliability-slos-incident-management-gen-ai-systems/repo/module-03-failure-handling-resilience/demo-clip2-retries-circuit-breakers/.run/preflight_report.html
+Log         → /Users/rt-prime/FSM/01-Active/02-Pluralsight/reliability-slos-incident-management-gen-ai-systems/repo/module-03-failure-handling-resilience/demo-clip2-retries-circuit-breakers/.run/preflight_20260315_170218.log
+
