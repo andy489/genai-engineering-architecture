@@ -1,0 +1,51 @@
+@'
+from genai_safety_gateway import (
+    route_decision,
+    human_review_queue,
+    reviewer_approve,
+    reviewer_reject,
+    review_feedback,
+)
+
+print("=== CLEAR DECISIONS ===")
+assert route_decision("Explain the refund policy.", 0.10) == "allow"
+assert route_decision("Synthetic high-risk example.", 0.95) == "block"
+
+print("\n=== CULTURAL AND LINGUISTIC CONTEXT ===")
+assert route_decision(
+    "You killed it on stage!",
+    0.92,
+    context_uncertain=True,
+    context_note="An idiom expressing praise for a performance.",
+) == "review"
+
+item = human_review_queue[-1]
+print("Reviewer sees:", item.text)
+print("Context:", item.context_note)
+assert reviewer_approve(item.request_id, reason="context_safe") == "allow"
+
+print("\n=== BORDERLINE CASE ===")
+assert route_decision(
+    "Synthetic borderline example requiring closer inspection.",
+    0.65,
+    context_note="Demo scenario: human inspection confirms a policy violation.",
+) == "review"
+
+item = human_review_queue[-1]
+assert reviewer_reject(item.request_id, reason="policy_violation") == "block"
+
+print("\n=== MANDATORY BLOCK ===")
+assert route_decision(
+    "Synthetic example with a mandatory policy block.",
+    0.20,
+    context_uncertain=True,
+    hard_block=True,
+) == "block"
+
+print("\n=== REVIEW FEEDBACK ===")
+for record in review_feedback:
+    print(record)
+
+assert len(human_review_queue) == 0
+print("\nPASS: all decisions matched expectations; review queue is empty.")
+'@ | python -

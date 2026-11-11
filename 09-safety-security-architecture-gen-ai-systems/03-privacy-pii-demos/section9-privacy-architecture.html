@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section 9 · Privacy by architecture</title>
+<style>
+:root{font-family:Segoe UI,Arial,sans-serif;color:#162b40;background:#eef2f5;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}main{max-width:1440px;margin:auto;padding:36px 44px 24px}
+.eyebrow{font-size:12px;letter-spacing:2px;font-weight:700;color:#53677b;text-transform:uppercase}
+header{display:flex;justify-content:space-between;gap:24px;align-items:center}h1{font-size:clamp(30px,3.4vw,48px);letter-spacing:-1.5px;margin:8px 0}header p{margin:0;color:#53677b;font-size:17px}.chapter{font-size:76px;font-weight:300;color:#c5d1dc;line-height:1}
+nav{display:flex;gap:8px;margin:26px 0 20px;flex-wrap:wrap}button{font:inherit;font-weight:600;padding:11px 20px;border:1px solid #c9d4de;border-radius:8px;background:#fff;color:#30465b;cursor:pointer}button[aria-pressed=true]{background:#162b40;border-color:#162b40;color:white}button:focus-visible,a:focus-visible{outline:3px solid #168889;outline-offset:3px}.print{margin-left:auto}
+[hidden]{display:none!important}.governance{background:#162b40;color:white;border-radius:12px;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}.governance strong{font-size:17px}.governance span{color:#d4e2ec;font-size:14px}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;margin:26px 0}.node{position:relative;background:white;border-radius:12px;padding:22px 20px;border-top:4px solid #287aab;box-shadow:0 5px 18px #162b4008}.node:not(:last-child):after{content:'→';position:absolute;right:-23px;top:50%;font-size:23px;color:#6a7f91}.step{font-size:12px;font-weight:700;color:#64788b;letter-spacing:1px}h2{font-size:21px;letter-spacing:-.4px;margin:10px 0}p{line-height:1.55}.node p{font-size:15px;color:#50677b;margin:0}.node.input{border-color:#11867e}.node.provider{border-color:#8160b7}.node.release{border-color:#297d66}
+.branch{display:flex;align-items:center;gap:14px;margin:0 0 18px;color:#50677b;font-size:13px}.branch:before{content:'↓';font-size:25px;margin-left:18px}.branch:after{content:'';height:1px;background:#c9d4de;flex:1}
+.lower{display:grid;grid-template-columns:1fr 1fr 1.14fr;gap:20px}.panel{background:white;border-radius:12px;padding:21px 24px}.panel h2{margin:0 0 13px;font-size:18px}.panel ul{padding-left:18px;margin:0;color:#50677b;line-height:1.7;font-size:15px}.panel.storage{border-left:4px solid #11867e}.panel.rights{border-left:4px solid #287aab}.panel.training{background:#fff4dc;border:1px solid #ecd49c}.label{display:inline-block;font-size:11px;font-weight:750;letter-spacing:1px;color:#775211;margin-bottom:10px}.training p{font-size:14px;margin:0;color:#654f27}.training strong{display:block;margin-top:10px;font-size:13px}
+.regulations{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.law{background:white;border-radius:14px;overflow:hidden}.law-head{padding:23px 25px;background:#e1eefb;border-top:5px solid #287aab}.law.ccpa .law-head{background:#e0f1ec;border-color:#11867e}.law.hipaa .law-head{background:#ede6f7;border-color:#8160b7}.law h2{font-size:30px;margin:0 0 7px}.scope{font-size:14px;line-height:1.5;margin:0;color:#465d73}.mapping{padding:7px 25px 22px}.mapping div{padding:16px 0;border-bottom:1px solid #e4eaf0}.mapping div:last-child{border:0}.mapping b{display:block;font-size:15px;margin-bottom:7px}.mapping span{display:block;color:#50677b;font-size:14px;line-height:1.5}.mapping span:before{content:'→ ';color:#15857c}.note{margin-top:20px;padding:16px 20px;border-left:3px solid #8b9dad;background:#e5ebf0;font-size:14px;line-height:1.6;color:#40596e}
+.comparison{display:grid;grid-template-columns:1fr 42px 1fr;align-items:center;gap:16px}.comparison article{border-radius:12px;overflow:hidden;background:white;align-self:stretch}.comparison h2{padding:18px 24px;margin:0;background:#f8e5e2;font-size:18px}.comparison .after h2{background:#def1e9}.comparison pre{font:15px/1.8 Consolas,monospace;margin:0;padding:24px;white-space:pre-wrap;overflow-wrap:anywhere}.arrow{text-align:center;font-size:32px;color:#6a7f91}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}.choices div{padding:18px 20px;border-top:2px solid #11867e;background:white;border-radius:0 0 8px 8px}.choices b{display:block;font-size:15px}.choices p{margin:8px 0 0;color:#50677b;font-size:14px}
+footer{display:flex;justify-content:space-between;gap:24px;color:#627689;font-size:12px;margin-top:25px;line-height:1.5}a{color:#326782}details{margin-top:20px;color:#526b7f;font-size:13px}summary{cursor:pointer}details ul{line-height:1.9}
+@media(max-width:850px){main{padding:24px}.flow{grid-template-columns:1fr 1fr}.node:after{display:none}.lower,.regulations{grid-template-columns:1fr}.governance{display:block}.governance span{display:block;margin-top:8px}.comparison{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}.choices{grid-template-columns:1fr}.chapter{display:none}footer{display:block}}
+@media(max-width:480px){.flow{grid-template-columns:1fr}.print{margin-left:0}main{padding:18px}h1{letter-spacing:-1px}}
+@media print{@page{size:landscape;margin:10mm}body{background:white}main{max-width:none;padding:0}nav,.chapter,details{display:none}section[hidden]{display:block!important}section{break-before:page;margin-top:20px}section:first-of-type{break-before:auto}header p{font-size:14px}h1{font-size:30px}.flow{gap:20px}.panel,.node,.law,.comparison article{break-inside:avoid}*{print-color-adjust:exact;-webkit-print-color-adjust:exact}footer{margin-top:12px}}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="eyebrow">Safety &amp; Security Architecture for GenAI Systems · Section 9</div><h1>Privacy by architecture.</h1><p>Translate regulatory obligations into decisions across the data lifecycle.</p></div><div class="chapter" aria-hidden="true">09</div></header>
+<nav aria-label="Presentation views"><button type="button" data-view="architecture" aria-pressed="true" aria-controls="architecture">01 · Follow the data</button><button type="button" data-view="regulations" aria-pressed="false" aria-controls="regulations">02 · Map the obligations</button><button type="button" data-view="logging" aria-pressed="false" aria-controls="logging">03 · Rethink the log</button><button type="button" class="print" id="print">Print / save PDF</button></nav>
+<section id="architecture" aria-label="Architecture walkthrough">
+<div class="governance"><strong>Governance spans every stage</strong><span>Applicability · Permitted purpose · Notices · Contracts · Accountability</span></div>
+<div class="flow" role="group" aria-label="Data flows from users through input handling and the provider to release">
+<article class="node"><div class="step">01 / COLLECT</div><h2>User data</h2><p>Prompts, documents,<br>images and context.</p></article>
+<article class="node input"><div class="step">02 / MINIMISE</div><h2>Input handling</h2><p>Collect only what is needed.<br>Redact and validate.</p></article>
+<article class="node provider"><div class="step">03 / PROCESS</div><h2>Model / provider</h2><p>Approve data use.<br>Review vendor terms and transfers.</p></article>
+<article class="node release"><div class="step">04 / RELEASE</div><h2>Output controls</h2><p>Inspect sensitive disclosures.<br>Restrict recipients.</p></article>
+</div>
+<div class="branch">From all processing stages: necessary audit metadata only</div>
+<div class="lower">
+<article class="panel storage"><h2>Logging &amp; storage</h2><ul><li>Allowlisted event fields</li><li>No raw prompts by default</li><li>Access controls and encryption</li><li>Purpose-based retention</li></ul></article>
+<article class="panel rights"><h2>Rights &amp; lifecycle</h2><ul><li>Verify identity and scope</li><li>Access, correction and deletion</li><li>Copies, backups and vendors</li><li>Applicable exceptions</li></ul></article>
+<article class="panel training"><div class="label">NO AUTOMATIC TRAINING REUSE</div><h2>A separate approval gate</h2><p>Assess purpose, lawful authority, notices, dataset provenance and vendor reuse terms.</p><strong>Deleting a log does not untrain a model.</strong></article>
+</div>
+<div class="note"><b>Global boundary:</b> map jurisdictions and subprocessors. Assess localisation and lawful transfer mechanisms; choosing a storage region is not sufficient by itself.</div>
+</section>
+<section id="regulations" aria-label="Regulatory obligations mapped to architectural controls" hidden>
+<div class="regulations">
+<article class="law"><div class="law-head"><h2>GDPR</h2><p class="scope">Personal-data processing within its scope.</p></div><div class="mapping"><div><b>Lawful basis &amp; purpose limitation</b><span>Document permitted uses; gate secondary reuse.</span></div><div><b>Minimisation, storage limits &amp; rights</b><span>Narrow schemas, justified retention, access/correction/deletion workflows.</span></div><div><b>International transfers</b><span>Review destinations and applicable transfer mechanisms.</span></div></div></article>
+<article class="law ccpa"><div class="law-head"><h2>CCPA</h2><p class="scope">Covered businesses; as amended by CPRA.</p></div><div class="mapping"><div><b>Know/access, correct &amp; delete</b><span>Verified rights workflows with applicable exceptions.</span></div><div><b>Sale / sharing opt-out</b><span>Propagate choices into relevant downstream flows.</span></div><div><b>Limits on certain sensitive uses</b><span>Purpose-aware restrictions. Not every AI use is a sale or sharing.</span></div></div></article>
+<article class="law hipaa"><div class="law-head"><h2>HIPAA</h2><p class="scope">Covered entities, business associates and applicable PHI.</p></div><div class="mapping"><div><b>Permitted uses &amp; disclosures</b><span>Restrict purposes and recipients; minimum necessary where required.</span></div><div><b>Safeguards for electronic PHI</b><span>Risk assessment, access/audit controls and appropriate encryption.</span></div><div><b>Business associate obligations</b><span>Appropriate agreements and vendor controls. Health text alone does not establish applicability.</span></div></div></article>
+</div>
+<div class="note"><b>Start with applicability.</b> These are architectural mappings, not exhaustive legal requirements. Moderation approval does not establish a lawful basis for processing.</div>
+</section>
+<section id="logging" aria-label="Illustrative before and after audit log" hidden>
+<div class="comparison">
+<article><h2>Before · Raw content accumulates</h2><pre>{
+  "name": "Demo Learner",
+  "email": "learner@example.com",
+  "prompt": "Fictional medical question…",
+  "response": "Private response…",
+  "decision": "allow"
+}</pre></article>
+<div class="arrow" aria-hidden="true">→</div>
+<article class="after"><h2>After · Retain necessary metadata</h2><pre>{
+  "event": "safety_decision",
+  "subject_token": "keyed-pseudonym…",
+  "decision": "allow",
+  "purpose": "security_audit",
+  "retention_policy": "approved-policy-id"
+}</pre></article>
+</div>
+<div class="choices"><div><b>Who can access it?</b><p>Restrict access, protect keys and audit authorised use.</p></div><div><b>How long is it needed?</b><p>Enforce the approved schedule and handle rights requests across copies.</p></div><div><b>Can it be reused?</b><p>Assess secondary purposes separately, including provider and training reuse.</p></div></div>
+<div class="note">Synthetic illustration; JSON fields do not enforce controls. Pseudonyms may still be personal data and are not HIPAA de-identification. There is no universal retention timer across these laws.</div>
+</section>
+<details><summary>Official references</summary><ul><li><a href="https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/principles-gdpr_en">European Commission · GDPR principles</a></li><li><a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/rules-international-data-transfers_en">European Commission · International transfers</a></li><li><a href="https://www.oag.ca.gov/privacy/ccpa">California Attorney General · CCPA</a></li><li><a href="https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html">HHS · Minimum necessary requirement</a></li><li><a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html">HHS · HIPAA and cloud computing</a></li></ul></details>
+<footer><span>Learning objective: understand privacy requirements through architectural decisions.</span><span>Teaching aid · Not compliance certification</span></footer>
+</main>
+<script>
+const buttons = [...document.querySelectorAll('[data-view]')];
+buttons.forEach(button => button.addEventListener('click', () => {
+  buttons.forEach(item => {
+    const selected = item === button;
+    item.setAttribute('aria-pressed', String(selected));
+    document.getElementById(item.dataset.view).hidden = !selected;
+  });
+}));
+document.getElementById('print').addEventListener('click', () => window.print());
+</script>
+</body>
+</html>

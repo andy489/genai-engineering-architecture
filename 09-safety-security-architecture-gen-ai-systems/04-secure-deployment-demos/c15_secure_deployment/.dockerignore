@@ -1,0 +1,5 @@
+# Allowlist the build context. In particular, never send .env files to a builder.
+**
+!Dockerfile
+!app.py
+!.dockerignore

@@ -1,0 +1,15 @@
+# GenAI safety gateway: sections 1-8.
+# HTTP/2 support is required by the gateway's HTTP client.
+httpx[http2]>=0.27,<1
+pydantic>=2,<3
+prometheus-client>=0.20,<1
+
+# Sections 6-8 add no third-party Python dependencies.
+# base64, collections.deque, and the other supporting modules ship with Python.
+# Section 7 OCR test: install Tesseract OCR separately, including English language
+# data, and put tesseract on PATH. The test invokes it through subprocess;
+# pip cannot install the OCR engine, and pytesseract/Pillow are not required.
+
+# Retained for the other course API examples.
+fastapi>=0.115,<1
+uvicorn>=0.30,<1

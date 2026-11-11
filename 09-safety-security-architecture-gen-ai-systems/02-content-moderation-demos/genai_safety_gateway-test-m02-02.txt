@@ -1,0 +1,35 @@
+@'
+import json
+from genai_safety_gateway import (
+    ProviderModeration,
+    classify_safety,
+    tune_safety_classifier,
+)
+
+# Synthetic scores paired with human labels: True means unsafe.
+samples = [
+    (ProviderModeration(False, (), {"violence": 0.10}), False),
+    (ProviderModeration(False, (), {"violence": 0.60}), False),
+    (ProviderModeration(False, (), {"violence": 0.70}), True),
+    (ProviderModeration(False, (), {"violence": 0.90}), True),
+]
+
+print("=== CLASSIFY AT THRESHOLD 0.55 ===")
+for result, unsafe in samples:
+    decision = classify_safety(result, threshold=0.55)
+    print(f"Score={result.maximum_score:.2f}, unsafe={unsafe}, decision={decision}")
+
+print("\n=== COMPARE THRESHOLDS ===")
+reports = tune_safety_classifier(samples, thresholds=(0.55, 0.65, 0.75))
+print(json.dumps(reports, indent=2))
+
+print("\n=== PROVIDER FLAG ALWAYS BLOCKS ===")
+flagged = ProviderModeration(True, ("violence",), {"violence": 0.10})
+assert classify_safety(flagged, threshold=0.75) == "block"
+print("PASS: provider flag blocks even below the threshold.")
+
+assert reports[0]["fp"] == 1
+assert reports[1]["fp"] == 0 and reports[1]["fn"] == 0
+assert reports[2]["fn"] == 1
+print("PASS: threshold comparisons match expected results.")
+'@ | python -

@@ -1,0 +1,9 @@
+# GenAI safety gateway: sections 1-5.
+# HTTP/2 support is required by the gateway's HTTP client.
+httpx[http2]>=0.27,<1
+pydantic>=2,<3
+prometheus-client>=0.20,<1
+
+# Retained for the other course API examples.
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
